@@ -7,3 +7,13 @@ C:\Users\Donny Kapic\Documents\GitHub\DonnyJustin-Assign5\DonnyJustin_Assign5\Do
 C:\Users\Donny Kapic\Documents\GitHub\DonnyJustin-Assign5\DonnyJustin_Assign5\DonnyJustin_Assign5\obj\Debug\DonnyJustin_Assign5.csproj.GenerateResource.Cache
 C:\Users\Donny Kapic\Documents\GitHub\DonnyJustin-Assign5\DonnyJustin_Assign5\DonnyJustin_Assign5\obj\Debug\DonnyJustin_Assign5.exe
 C:\Users\Donny Kapic\Documents\GitHub\DonnyJustin-Assign5\DonnyJustin_Assign5\DonnyJustin_Assign5\obj\Debug\DonnyJustin_Assign5.pdb
+C:\Users\geoth\Documents\GitHub\DonnyJustin-Assign5\DonnyJustin_Assign5\DonnyJustin_Assign5\obj\Debug\DonnyJustin_Assign5.csprojAssemblyReference.cache
+C:\Users\geoth\Documents\GitHub\DonnyJustin-Assign5\DonnyJustin_Assign5\DonnyJustin_Assign5\obj\Debug\DonnyJustin_Assign5.Form1.resources
+C:\Users\geoth\Documents\GitHub\DonnyJustin-Assign5\DonnyJustin_Assign5\DonnyJustin_Assign5\obj\Debug\DonnyJustin_Assign5.Properties.Resources.resources
+C:\Users\geoth\Documents\GitHub\DonnyJustin-Assign5\DonnyJustin_Assign5\DonnyJustin_Assign5\obj\Debug\DonnyJustin_Assign5.csproj.GenerateResource.cache
+C:\Users\geoth\Documents\GitHub\DonnyJustin-Assign5\DonnyJustin_Assign5\DonnyJustin_Assign5\obj\Debug\DonnyJustin_Assign5.csproj.CoreCompileInputs.cache
+C:\Users\geoth\Documents\GitHub\DonnyJustin-Assign5\DonnyJustin_Assign5\DonnyJustin_Assign5\obj\Debug\DonnyJustin_Assign5.exe
+C:\Users\geoth\Documents\GitHub\DonnyJustin-Assign5\DonnyJustin_Assign5\DonnyJustin_Assign5\obj\Debug\DonnyJustin_Assign5.pdb
+C:\Users\geoth\Documents\GitHub\DonnyJustin-Assign5\DonnyJustin_Assign5\DonnyJustin_Assign5\bin\Debug\DonnyJustin_Assign5.exe.config
+C:\Users\geoth\Documents\GitHub\DonnyJustin-Assign5\DonnyJustin_Assign5\DonnyJustin_Assign5\bin\Debug\DonnyJustin_Assign5.exe
+C:\Users\geoth\Documents\GitHub\DonnyJustin-Assign5\DonnyJustin_Assign5\DonnyJustin_Assign5\bin\Debug\DonnyJustin_Assign5.pdb
