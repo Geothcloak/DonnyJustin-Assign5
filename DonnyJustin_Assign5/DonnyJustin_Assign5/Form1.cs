@@ -57,8 +57,10 @@ namespace DonnyJustin_Assign5
         string[] h4_end;
 
         int game;
-        string difficulty;
         int previousGame = 1;
+        string difficulty;
+        string[] currentGame;
+        Stopwatch timer;
 
         List<TextBox> boxes = new List<TextBox>();
 
@@ -66,16 +68,8 @@ namespace DonnyJustin_Assign5
         {
             InitializeComponent();
 
-            var timer = Stopwatch.StartNew();
-
-
             loadGames();
             loadBoxes();
-
-            timer.Stop();
-
-            //MessageBox.Show(timer.Elapsed.TotalMilliseconds.ToString());
-           
         }
 
         private void loadBoxes()
@@ -174,23 +168,34 @@ namespace DonnyJustin_Assign5
         }
 
         // load the selected game onto the screen
-        private void setGame(string[] selectedGame)
+        private void setGame()
         {
+            // reset readonly 
+            foreach (var i in boxes)
+                i.ReadOnly = false;
+
+
             char[] temp;
             int j = 0;
             int w = 0;
-            temp = tokenize(selectedGame[0]);
+            temp = tokenize(currentGame[0]);
             foreach (var i in boxes)
             {
                 if (j > 8)
                 {
                     j = 0;
-                    temp = tokenize(selectedGame[w]);
+                    temp = tokenize(currentGame[w+1]);
                     w++;
                 }
                 i.Text = temp[j].ToString();
+                // pre-filled boxes cannot be changed
+                if (i.Text != " ")
+                    i.ReadOnly = true;
                 j++;
             }
+
+            timer = Stopwatch.StartNew();
+            textBoxTimer.Text = "0.00";
         }
 
         private char[] tokenize(string game)
@@ -270,18 +275,101 @@ namespace DonnyJustin_Assign5
             }
 
             // filter whitespace
-            var builder = new StringBuilder();
+            var attempt = new StringBuilder();
             for (int i = 0; i < temp.Length; i++)
             {
                 if (temp[i] != ' ')
-                    builder.Append(temp[i]);
+                    attempt.Append(temp[i]);
             }
 
-            // ** TO DO  **
-            // 
-            // Need to find a way to compare the numbers in builder with
-            // the numbers in the completed version to see if user has finished.
-            
+            var answer = getFinal();
+
+            if (attempt.ToString() == answer)
+            {
+                // Puzzle solved correnctly
+                timer.Stop();
+                MessageBox.Show("Puzzle Complete!");
+                textBoxTimer.Text = timer.Elapsed.TotalSeconds.ToString();      // display total seconds
+            }
+            else
+            {
+                // Unsolved
+                MessageBox.Show(attempt.ToString());
+                MessageBox.Show(answer);
+            }
+        }
+
+        private string getFinal()
+        {
+            string[] temp = new string[81];
+            if (difficulty == "easy")
+            {
+                switch (game)
+                {
+                    case 1:
+                        temp = e1_end;
+                        break;
+                    case 2:
+                        temp = e2_end;
+                        break;
+                    case 3:
+                        temp = e3_end;
+                        break;
+                    case 4:
+                        temp = e4_end;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if (difficulty == "medium")
+            {
+                switch (game)
+                {
+                    case 1:
+                        temp = m1_end;
+                        break;
+                    case 2:
+                        temp = m2_end;
+                        break;
+                    case 3:
+                        temp = m3_end;
+                        break;
+                    case 4:
+                        temp = m4_end;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if (difficulty == "hard")
+            {
+                switch (game)
+                {
+                    case 1:
+                        temp = h1_end;
+                        break;
+                    case 2:
+                        temp = h2_end;
+                        break;
+                    case 3:
+                        temp = h3_end;
+                        break;
+                    case 4:
+                        temp = h4_end;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            var builder = new StringBuilder();
+            foreach (var i in temp)
+            {
+                builder.Append(i);
+            }
+
+            return builder.ToString();
         }
 
         // load easy game
@@ -299,16 +387,20 @@ namespace DonnyJustin_Assign5
             switch (game)
             {
                 case 1:
-                    setGame(e1_start);
+                    currentGame = e1_start;
+                    setGame();
                     break;
                 case 2:
-                    setGame(e2_start);
+                    currentGame = e2_start;
+                    setGame();
                     break;
                 case 3:
-                    setGame(e3_start);
+                    currentGame = e3_start;
+                    setGame();
                     break;
                 case 4:
-                    setGame(e4_start);
+                    currentGame = e4_start;
+                    setGame();
                     break;
                 default:
                     break;
@@ -332,16 +424,20 @@ namespace DonnyJustin_Assign5
             switch (game)
             {
                 case 1:
-                    setGame(m1_start);
+                    currentGame = m1_start;
+                    setGame();
                     break;
                 case 2:
-                    setGame(m2_start);
+                    currentGame = m2_start;
+                    setGame();
                     break;
                 case 3:
-                    setGame(m3_start);
+                    currentGame = m3_start;
+                    setGame();
                     break;
                 case 4:
-                    setGame(m4_start);
+                    currentGame = m4_start;
+                    setGame();
                     break;
                 default:
                     break;
@@ -365,22 +461,59 @@ namespace DonnyJustin_Assign5
             switch (game)
             {
                 case 1:
-                    setGame(h1_start);
+                    currentGame = h1_start;
+                    setGame();
                     break;
                 case 2:
-                    setGame(h2_start);
+                    currentGame = h2_start;
+                    setGame();
                     break;
                 case 3:
-                    setGame(h3_start);
+                    currentGame = h3_start;
+                    setGame();
                     break;
                 case 4:
-                    setGame(h4_start);
+                    currentGame = h4_start;
+                    setGame();
                     break;
                 default:
                     break;
             }
 
             previousGame = game;
+        }
+
+        private void textBox_TextChanged(object sender, EventArgs e)
+        {
+            int parsedValue = 0;
+            if (!int.TryParse(sender.ToString(), out parsedValue))
+            {
+                //MessageBox.Show(sender.ToString());
+                return;
+            }
+        }
+
+        private void buttonReset_Click(object sender, EventArgs e)
+        {
+            setGame();
+        }
+
+        private void buttonPause_Click(object sender, EventArgs e)
+        {
+            if (buttonPause.Text == "pause")
+            {
+                timer.Stop();
+                foreach (var i in boxes)
+                    i.Visible = false;
+                buttonPause.Text = "play";
+            }
+            else if (buttonPause.Text == "play")
+            {
+                timer.Start();
+                foreach (var i in boxes)
+                    i.Visible = true;
+                buttonPause.Text = "pause";
+            }
         }
     }
 }
