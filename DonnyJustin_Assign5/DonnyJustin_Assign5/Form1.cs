@@ -57,7 +57,7 @@ namespace DonnyJustin_Assign5
         string[] h4_end;
 
         int game;
-        int previousGame = 1;
+        int previousGame = 0;
         string difficulty;
         string[] currentGame;
         Stopwatch timer;
@@ -294,8 +294,7 @@ namespace DonnyJustin_Assign5
             else
             {
                 // Unsolved
-                MessageBox.Show(attempt.ToString());
-                MessageBox.Show(answer);
+                MessageBox.Show("Not Quite");
             }
         }
 
@@ -488,8 +487,11 @@ namespace DonnyJustin_Assign5
             int parsedValue = 0;
             if (!int.TryParse(sender.ToString(), out parsedValue))
             {
-                //MessageBox.Show(sender.ToString());
-                return;
+                if (sender.ToString() == " ")
+                {
+                    //MessageBox.Show(sender.ToString());
+                    return;
+                }
             }
         }
 
@@ -514,6 +516,37 @@ namespace DonnyJustin_Assign5
                     i.Visible = true;
                 buttonPause.Text = "pause";
             }
+        }
+
+        private void buttonCheat_Click(object sender, EventArgs e)
+        {
+            /*var temp = new StringBuilder();
+            foreach (var i in boxes)
+            {
+                temp.Append(i.Text);
+            }
+
+            // filter whitespace
+            var attempt = new StringBuilder();
+            for (int i = 0; i < temp.Length; i++)
+            {
+                if (temp[i] != ' ')
+                    attempt.Append(temp[i]);
+            }
+
+            var answer = getFinal();
+
+            for (int i = 0; i < attempt.Length; i++)
+            {
+                if (attempt[i] != answer[i])
+                {
+                    attempt[i] = answer[i];
+                    
+                    break;
+                }
+            }
+
+            MessageBox.Show("You have used a cheat, smh");*/
         }
     }
 }

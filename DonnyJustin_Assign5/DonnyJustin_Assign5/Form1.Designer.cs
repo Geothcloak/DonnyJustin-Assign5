@@ -789,6 +789,7 @@
             this.buttonCheat.TabIndex = 82;
             this.buttonCheat.Text = "cheat";
             this.buttonCheat.UseVisualStyleBackColor = false;
+            this.buttonCheat.Click += new System.EventHandler(this.buttonCheat_Click);
             // 
             // buttonCheck
             // 
