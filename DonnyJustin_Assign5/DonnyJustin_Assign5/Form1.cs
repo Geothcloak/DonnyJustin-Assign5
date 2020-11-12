@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
-
+using System.Deployment.Application;
 
 namespace DonnyJustin_Assign5
 {
@@ -61,6 +61,7 @@ namespace DonnyJustin_Assign5
         string difficulty;
         string[] currentGame;
         Stopwatch timer;
+        string currentGamePath;
 
         List<TextBox> boxes = new List<TextBox>();
 
@@ -208,6 +209,16 @@ namespace DonnyJustin_Assign5
             }
             return numbers;
         }
+        private string[] untokenize(string[] game)
+        {
+            for (int i = 0; i < game.Length; i++)
+            {
+                    game[i].Replace(' ', '0');
+            }
+
+            // return game without spaces only 0.
+            return game;
+        }
 
         // read and store each possible game
         private void loadGames()
@@ -217,39 +228,51 @@ namespace DonnyJustin_Assign5
 
             e1_start = setStart(directory[0]);
             e1_end = setEnd(directory[0]);
+            e1_progress = setProgress(directory[0]);
 
             e2_start = setStart(directory[1]);
             e2_end = setEnd(directory[1]);
+            e2_progress = setProgress(directory[1]);
 
             e3_start = setStart(directory[2]);
             e3_end = setEnd(directory[2]);
+            e3_progress = setProgress(directory[2]);
 
             e4_start = setStart(directory[3]);
             e4_end = setEnd(directory[3]);
+            e4_progress = setProgress(directory[3]);
 
             m1_start = setStart(directory[4]);
             m1_end = setEnd(directory[4]);
+            m1_progress = setEnd(directory[4]);
 
             m2_start = setStart(directory[5]);
             m2_end = setEnd(directory[5]);
+            m2_progress = setEnd(directory[5]);
 
             m3_start = setStart(directory[6]);
             m3_end = setEnd(directory[6]);
+            m3_progress = setEnd(directory[6]);
 
             m4_start = setStart(directory[7]);
             m4_end = setEnd(directory[7]);
+            m4_progress = setEnd(directory[7]);
 
             h1_start = setStart(directory[8]);
             h1_end = setEnd(directory[8]);
+            h1_progress = setEnd(directory[8]);
 
             h2_start = setStart(directory[9]);
             h2_end = setEnd(directory[9]);
+            h2_progress = setEnd(directory[9]);
 
             h3_start = setStart(directory[10]);
             h3_end = setEnd(directory[10]);
+            h3_progress = setEnd(directory[10]);
 
             h4_start = setStart(directory[11]);
             h4_end = setEnd(directory[11]);
+            h4_progress = setEnd(directory[11]);
         }
 
         // read and store the initial state of the game
@@ -265,6 +288,28 @@ namespace DonnyJustin_Assign5
             string[] endState = File.ReadLines(path).Skip(10).Take(9).ToArray();
             return endState;
         }
+
+        // read and store the progress save state of the game
+        private string[] setProgress(string path)
+        {
+            string[] progressState = null;
+            // if file has > 19 lines then we know it has been saved
+            // so load from file
+            if (File.ReadLines(path).Count() > 19)
+            {
+                progressState= File.ReadLines(path).Skip(20).Take(9).ToArray();
+                // TODO put state of timer 
+                /*
+                // not .to array since timerstate wont be an array
+                timerState = File.ReadLines(path).Skip(29).Take(1).ToArray();
+                */
+            }
+            // if the file does not have > 19 lines then don't load the saved state
+            // so keep it null 
+
+            return progressState;
+        }
+
 
         private void buttonCheck_Click(object sender, EventArgs e)
         {
@@ -388,19 +433,51 @@ namespace DonnyJustin_Assign5
             {
                 case 1:
                     currentGame = e1_start;
-                    setGame();
+                    currentGamePath = "easy/e1.txt";
+                    if (doesThisGameHaveSave(currentGamePath))
+                    {
+                        currentGame = e1_progress;
+                    }
+                    else
+                    {
+                        setGame();
+                    }
                     break;
                 case 2:
                     currentGame = e2_start;
-                    setGame();
+                    currentGamePath = "easy/e2.txt";
+                    if (doesThisGameHaveSave(currentGamePath))
+                    {
+                        currentGame = e2_progress;
+                    }
+                    else
+                    {
+                        setGame();
+                    }
                     break;
                 case 3:
                     currentGame = e3_start;
-                    setGame();
+                    currentGamePath = "easy/e3.txt";
+                    if (doesThisGameHaveSave(currentGamePath))
+                    {
+                        currentGame = e3_progress;
+                    }
+                    else
+                    {
+                        setGame();
+                    }
                     break;
                 case 4:
                     currentGame = e4_start;
-                    setGame();
+                    currentGamePath = "easy/e4.txt";
+                    if (doesThisGameHaveSave(currentGamePath))
+                    {
+                        currentGame = e4_progress;
+                    }
+                    else
+                    {
+                        setGame();
+                    }
                     break;
                 default:
                     break;
@@ -424,20 +501,53 @@ namespace DonnyJustin_Assign5
             switch (game)
             {
                 case 1:
+                    // TODO check to see if saved if it is load from save first
                     currentGame = m1_start;
-                    setGame();
+                    currentGamePath = "medium/m1.txt";
+                    if (doesThisGameHaveSave(currentGamePath))
+                    {
+                        currentGame = m1_progress;
+                    }
+                    else
+                    {
+                        setGame();
+                    }
                     break;
                 case 2:
                     currentGame = m2_start;
-                    setGame();
+                    currentGamePath = "medium/m2.txt";
+                    if (doesThisGameHaveSave(currentGamePath))
+                    {
+                        currentGame = m2_progress;
+                    }
+                    else
+                    {
+                        setGame();
+                    }
                     break;
                 case 3:
                     currentGame = m3_start;
-                    setGame();
+                    currentGamePath = "medium/m3.txt";
+                    if (doesThisGameHaveSave(currentGamePath))
+                    {
+                        currentGame = m3_progress;
+                    }
+                    else
+                    {
+                        setGame();
+                    }
                     break;
                 case 4:
                     currentGame = m4_start;
-                    setGame();
+                    currentGamePath = "medium/m4.txt";
+                    if (doesThisGameHaveSave(currentGamePath))
+                    {
+                        currentGame = m4_progress;
+                    }
+                    else
+                    {
+                        setGame();
+                    }
                     break;
                 default:
                     break;
@@ -461,20 +571,53 @@ namespace DonnyJustin_Assign5
             switch (game)
             {
                 case 1:
+                    // TODO check to see if saved if it is load from save first
                     currentGame = h1_start;
-                    setGame();
+                    currentGamePath = "hard/h1.txt";
+                    if (doesThisGameHaveSave(currentGamePath))
+                    {
+                        currentGame = h1_progress;
+                    }
+                    else
+                    {
+                        setGame();
+                    }
                     break;
                 case 2:
                     currentGame = h2_start;
-                    setGame();
+                    currentGamePath = "hard/h2.txt";
+                    if (doesThisGameHaveSave(currentGamePath))
+                    {
+                        currentGame = h2_progress;
+                    }
+                    else
+                    {
+                        setGame();
+                    }
                     break;
                 case 3:
                     currentGame = h3_start;
-                    setGame();
+                    currentGamePath = "hard/h3.txt";
+                    if (doesThisGameHaveSave(currentGamePath))
+                    {
+                        currentGame = h3_progress;
+                    }
+                    else
+                    {
+                        setGame();
+                    }
                     break;
                 case 4:
                     currentGame = h4_start;
-                    setGame();
+                    currentGamePath = "hard/h4.txt";
+                     if (doesThisGameHaveSave(currentGamePath))
+                    {
+                        currentGame = h4_progress;
+                    }
+                    else
+                    {
+                        setGame();
+                    }
                     break;
                 default:
                     break;
@@ -514,6 +657,71 @@ namespace DonnyJustin_Assign5
                     i.Visible = true;
                 buttonPause.Text = "pause";
             }
+        }
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            // check if the puzzle has been saved before
+            if (doesThisGameHaveSave(currentGamePath))
+            {
+                // if true over ride current save
+
+            }
+            else
+            {
+                // no current save so add lines
+                MessageBox.Show("inside write");
+
+                // TODO update current game state
+                var temp = new StringBuilder();
+                foreach (var i in boxes)
+                {
+                    //if one space or a zero then save a 0
+                    if (i.Text.Equals(" ") || i.Text.Equals(" 0"))
+                    {
+                        temp.Append('0');
+                    }
+                    else
+                    {
+                        temp.Append(i.Text);
+                    }
+                }
+                // turn blanks into zeros
+                temp = temp.Replace(" ", string.Empty);
+
+                // convert temp into a char array for proper printing
+                string stringTemp = temp.ToString();
+                char[] charArray = stringTemp.ToCharArray();
+
+                using (StreamWriter sw = File.AppendText(currentGamePath))
+                {
+                    sw.WriteLine('\n');
+                        for (int ii = 0; ii < 81; ii++)
+                        {
+                            sw.Write(charArray[ii]);
+                            int flag = ii + 1;
+                            if (flag % 9 == 0)
+                            {
+                                sw.Write('\n');
+                            }
+                        }
+                }
+            }
+        }
+        private bool doesThisGameHaveSave(string path)
+        {
+            // if the file doesn't have more than 19 lines it doesn't have a save state
+            if (File.ReadLines(path).Count() > 21)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void buttonCheat_Click(object sender, EventArgs e)
+        {
+            // if a zero exists replace it with correct answer
+            // else replace first found wrong number
         }
     }
 }

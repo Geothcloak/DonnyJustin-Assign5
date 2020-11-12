@@ -778,6 +778,7 @@
             this.buttonSave.TabIndex = 81;
             this.buttonSave.Text = "save";
             this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // buttonCheat
             // 
@@ -789,6 +790,7 @@
             this.buttonCheat.TabIndex = 82;
             this.buttonCheat.Text = "cheat";
             this.buttonCheat.UseVisualStyleBackColor = false;
+            this.buttonCheat.Click += new System.EventHandler(this.buttonCheat_Click);
             // 
             // buttonCheck
             // 
