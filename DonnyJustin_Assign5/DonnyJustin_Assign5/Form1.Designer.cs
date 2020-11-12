@@ -716,6 +716,7 @@
             this.buttonCheck.TabIndex = 83;
             this.buttonCheck.Text = "check";
             this.buttonCheck.UseVisualStyleBackColor = true;
+            this.buttonCheck.Click += new System.EventHandler(this.buttonCheck_Click);
             // 
             // label1
             // 
@@ -734,6 +735,7 @@
             this.buttonDiffEasy.TabIndex = 85;
             this.buttonDiffEasy.Text = "easy";
             this.buttonDiffEasy.UseVisualStyleBackColor = true;
+            this.buttonDiffEasy.Click += new System.EventHandler(this.buttonDiffEasy_Click);
             // 
             // buttonDiffMedium
             // 
@@ -743,6 +745,7 @@
             this.buttonDiffMedium.TabIndex = 86;
             this.buttonDiffMedium.Text = "medium";
             this.buttonDiffMedium.UseVisualStyleBackColor = true;
+            this.buttonDiffMedium.Click += new System.EventHandler(this.buttonDiffMedium_Click);
             // 
             // buttonDiffHard
             // 
@@ -752,6 +755,7 @@
             this.buttonDiffHard.TabIndex = 87;
             this.buttonDiffHard.Text = "hard";
             this.buttonDiffHard.UseVisualStyleBackColor = true;
+            this.buttonDiffHard.Click += new System.EventHandler(this.buttonDiffHard_Click);
             // 
             // buttonPause
             // 
