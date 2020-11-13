@@ -9,14 +9,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 
 namespace DonnyJustin_Assign5
 {
     public partial class Form1 : Form
     {
-        string[] current;
-
         string[] e1_start;
         string[] e2_start;
         string[] e3_start;
@@ -56,12 +55,13 @@ namespace DonnyJustin_Assign5
         string[] h3_end;
         string[] h4_end;
 
+        Stopwatch timer;
         int game;
         int previousGame = 0;
-        string difficulty;
         string[] currentGame;
-        Stopwatch timer;
+        string difficulty;
         string currentGamePath;
+        bool cheatUsed = false;
 
         List<TextBox> boxes = new List<TextBox>();
 
@@ -173,7 +173,10 @@ namespace DonnyJustin_Assign5
         {
             // reset readonly 
             foreach (var i in boxes)
+            {
+                i.Font = new Font(i.Font, FontStyle.Regular);
                 i.ReadOnly = false;
+            }
 
 
             char[] temp;
@@ -191,7 +194,10 @@ namespace DonnyJustin_Assign5
                 i.Text = temp[j].ToString();
                 // pre-filled boxes cannot be changed
                 if (i.Text != " ")
+                {
+                    i.Font = new Font(i.Font, FontStyle.Bold);
                     i.ReadOnly = true;
+                }
                 j++;
             }
 
@@ -209,6 +215,7 @@ namespace DonnyJustin_Assign5
             }
             return numbers;
         }
+
         private string[] untokenize(string[] game)
         {
             for (int i = 0; i < game.Length; i++)
@@ -319,6 +326,8 @@ namespace DonnyJustin_Assign5
 
             return progressState;
         }
+
+        // checks if puzzle is solved
         private void buttonCheck_Click(object sender, EventArgs e)
         {
             var temp = new StringBuilder();
@@ -341,8 +350,17 @@ namespace DonnyJustin_Assign5
             {
                 // Puzzle solved correnctly
                 timer.Stop();
-                MessageBox.Show("Puzzle Complete!");
-                textBoxTimer.Text = timer.Elapsed.TotalSeconds.ToString();      // display total seconds
+                if (!cheatUsed)
+                {
+                    MessageBox.Show("Puzzle Complete!", "Congrats!");
+                    textBoxTimer.Text = timer.Elapsed.TotalSeconds.ToString();      // display total seconds
+                }
+                else
+                {
+                    MessageBox.Show("You finished the puzzle... but at what cost?", "Cheater");
+                    timer.Reset();
+                }
+                
             }
             else
             {
@@ -445,10 +463,8 @@ namespace DonnyJustin_Assign5
                     {
                         currentGame = e1_progress;
                     }
-                    else
-                    {
-                        setGame();
-                    }
+                    setGame();
+                    
                     break;
                 case 2:
                     currentGame = e2_start;
@@ -457,10 +473,9 @@ namespace DonnyJustin_Assign5
                     {
                         currentGame = e2_progress;
                     }
-                    else
-                    {
-                        setGame();
-                    }
+
+                    setGame();
+
                     break;
                 case 3:
                     currentGame = e3_start;
@@ -469,10 +484,9 @@ namespace DonnyJustin_Assign5
                     {
                         currentGame = e3_progress;
                     }
-                    else
-                    {
-                        setGame();
-                    }
+
+                    setGame();
+
                     break;
                 case 4:
                     currentGame = e4_start;
@@ -481,10 +495,7 @@ namespace DonnyJustin_Assign5
                     {
                         currentGame = e4_progress;
                     }
-                    else
-                    {
-                        setGame();
-                    }
+                    setGame();
                     break;
                 default:
                     break;
@@ -633,19 +644,6 @@ namespace DonnyJustin_Assign5
             previousGame = game;
         }
 
-        private void textBox_TextChanged(object sender, EventArgs e)
-        {
-            int parsedValue = 0;
-            if (!int.TryParse(sender.ToString(), out parsedValue))
-            {
-                if (sender.ToString() == " ")
-                {
-                    //MessageBox.Show(sender.ToString());
-                    return;
-                }
-            }
-        }
-
         private void buttonReset_Click(object sender, EventArgs e)
         {
             setGame();
@@ -669,40 +667,32 @@ namespace DonnyJustin_Assign5
             }
         }
 
-
         private void buttonCheat_Click(object sender, EventArgs e)
         {
-            /*var temp = new StringBuilder();
+            cheatUsed = true;
+            var temp = new StringBuilder();
             foreach (var i in boxes)
             {
                 temp.Append(i.Text);
             }
-
-            // filter whitespace
-            var attempt = new StringBuilder();
-            for (int i = 0; i < temp.Length; i++)
-            {
-                if (temp[i] != ' ')
-                    attempt.Append(temp[i]);
-            }
-
             var answer = getFinal();
-
-            for (int i = 0; i < attempt.Length; i++)
+            int j = 0;
+            foreach (var i in boxes)
             {
-                if (attempt[i] != answer[i])
+                if (i.Text != answer[j].ToString())
                 {
-                    attempt[i] = answer[i];
-                    
+                    i.Text = answer[j].ToString();
                     break;
                 }
+                j++;
             }
 
-            MessageBox.Show("You have used a cheat, smh");*/
+            MessageBox.Show("You have used a cheat, smh");
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("test");
             // check if the puzzle has been saved before
             if (doesThisGameHaveSave(currentGamePath))
             {
@@ -750,6 +740,7 @@ namespace DonnyJustin_Assign5
                 }
             }
         }
+
         private bool doesThisGameHaveSave(string path)
         {
             // if the file doesn't have more than 19 lines it doesn't have a save state
@@ -758,6 +749,21 @@ namespace DonnyJustin_Assign5
                 return true;
             }
             return false;
+        }
+
+        private void textBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar)
+                    && !char.IsDigit(e.KeyChar)
+                    && e.KeyChar != '.' && e.KeyChar != '+' && e.KeyChar != '-'
+                    && e.KeyChar != '(' && e.KeyChar != ')' && e.KeyChar != '*'
+                    && e.KeyChar != '/')
+            {
+                e.Handled = true;
+                return;
+            }
+            e.Handled = false;
+            return;
         }
     }
 }
