@@ -1,4 +1,10 @@
-﻿using System;
+﻿///////////////////////////////////////
+/// Donny Kapic z1855273
+/// Justin Roesner z1858242
+/// CSCI 473 .NET programming
+/// Assign 5 SUDOKU
+///////////////////////////////////////
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -253,42 +259,42 @@ namespace DonnyJustin_Assign5
 
             m1_start = setStart(directory[4]);
             m1_end = setEnd(directory[4]);
-            m1_progress = setEnd(directory[4]);
+            m1_progress = setProgress(directory[4]);
 
 
             m2_start = setStart(directory[5]);
             m2_end = setEnd(directory[5]);
-            m2_progress = setEnd(directory[5]);
+            m2_progress = setProgress(directory[5]);
 
 
             m3_start = setStart(directory[6]);
             m3_end = setEnd(directory[6]);
-            m3_progress = setEnd(directory[6]);
+            m3_progress = setProgress(directory[6]);
 
 
             m4_start = setStart(directory[7]);
             m4_end = setEnd(directory[7]);
-            m4_progress = setEnd(directory[7]);
+            m4_progress = setProgress(directory[7]);
 
 
             h1_start = setStart(directory[8]);
             h1_end = setEnd(directory[8]);
-            h1_progress = setEnd(directory[8]);
+            h1_progress = setProgress(directory[8]);
 
 
             h2_start = setStart(directory[9]);
             h2_end = setEnd(directory[9]);
-            h2_progress = setEnd(directory[9]);
+            h2_progress = setProgress(directory[9]);
 
 
             h3_start = setStart(directory[10]);
             h3_end = setEnd(directory[10]);
-            h3_progress = setEnd(directory[10]);
+            h3_progress = setProgress(directory[10]);
 
 
             h4_start = setStart(directory[11]);
             h4_end = setEnd(directory[11]);
-            h4_progress = setEnd(directory[11]);
+            h4_progress = setProgress(directory[11]);
 
         }
 
@@ -315,7 +321,6 @@ namespace DonnyJustin_Assign5
             if (File.ReadLines(path).Count() > 19)
             {
                 progressState = File.ReadLines(path).Skip(20).Take(9).ToArray();
-                // TODO put state of timer 
                 /*
                 // not .to array since timerstate wont be an array
                 timerState = File.ReadLines(path).Skip(29).Take(1).ToArray();
@@ -365,7 +370,7 @@ namespace DonnyJustin_Assign5
             else
             {
                 // Unsolved
-                MessageBox.Show("Not Quite");
+                MessageBox.Show("Not Quite Solved");
             }
         }
 
@@ -519,7 +524,6 @@ namespace DonnyJustin_Assign5
             switch (game)
             {
                 case 1:
-                    // TODO check to see if saved if it is load from save first
                     currentGame = m1_start;
                     currentGamePath = "medium/m1.txt";
                     if (doesThisGameHaveSave(currentGamePath))
@@ -589,7 +593,6 @@ namespace DonnyJustin_Assign5
             switch (game)
             {
                 case 1:
-                    // TODO check to see if saved if it is load from save first
                     currentGame = h1_start;
                     currentGamePath = "hard/h1.txt";
                     if (doesThisGameHaveSave(currentGamePath))
@@ -686,13 +689,10 @@ namespace DonnyJustin_Assign5
                 }
                 j++;
             }
-
-            MessageBox.Show("You have used a cheat, smh");
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("test");
             // check if the puzzle has been saved before
             if (doesThisGameHaveSave(currentGamePath))
             {
@@ -702,9 +702,6 @@ namespace DonnyJustin_Assign5
             else
             {
                 // no current save so add lines
-                MessageBox.Show("inside write");
-
-                // TODO update current game state
                 var temp = new StringBuilder();
                 foreach (var i in boxes)
                 {
@@ -732,6 +729,10 @@ namespace DonnyJustin_Assign5
                     {
                         sw.Write(charArray[ii]);
                         int flag = ii + 1;
+                        if (flag % 81 == 0)
+                        {
+                            break;
+                        }
                         if (flag % 9 == 0)
                         {
                             sw.Write('\n');
